@@ -2,7 +2,7 @@ import {TodoCounter} from './TodoCounter';
 import {TodoSearch} from './TodoSearch';
 import {TodoList} from './TodoList';
 import {TodoItem} from './TodoItem';
-import {CreateTodoButtom} from './CreateTodoButtom';
+import {CreateTodoButton} from './CreateTodoButton';
 
 const todos = [
   {text:'Cortar cebolla', completed:false},
@@ -20,7 +20,7 @@ function App() {
           <TodoItem key={item.text} text={item.text} completed={item.completed}/>
         ))}
       </TodoList>
-      <CreateTodoButtom /> 
+      <CreateTodoButton />
 
     </>
   );
