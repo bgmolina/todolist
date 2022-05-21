@@ -37,7 +37,28 @@ function App() {
       const searchText = searchValue.toLocaleLowerCase(); // convierte a minuscula cada letra escriba en el input
       return todoText.includes(searchText); // compara 1 valor texto con otro, y si algun [text] contiene lo que se va escriiendo en el input, retorna el array de ese item
     })
-    console.log("searchedTodos:", searchedTodos) //[X]
+  };
+
+  const completeTodo = (text) => {
+    // obtiene el indice del item del array [todos] que se haga click
+    const todoIndex = todos.findIndex(item => item.text === text);
+
+    // hacemos copia del array [todos]
+    const newTodo = [...todos];
+
+    //actualizamos el valor "completed" del indice obtenido previamente
+    newTodo[todoIndex].completed = true;
+
+    // mostramos el array modificado
+    setTodos(newTodo);
+  };
+
+  const deleteTodo = (text) => {
+    // obtiene todos los item del array [todos] MENOS al que se haga click
+    const newTodo = todos.filter(item => item.text !== text);
+
+    // mostramos el array modificado
+    setTodos(newTodo);
   };
 
   return (
@@ -46,7 +67,13 @@ function App() {
       <TodoSearch searchValue = {searchValue} setSearchValue={setSearchValue}/>
       <TodoList>
         {searchedTodos.map(item => (
-          <TodoItem key={item.text} text={item.text} completed={item.completed}/>
+          <TodoItem
+            key={item.text}
+            text={item.text}
+            completed={item.completed}
+            onComplete={() => completeTodo(item.text)}
+            onDelete={() => deleteTodo(item.text)}
+          />
         ))}
       </TodoList>
       <CreateTodoButton />
