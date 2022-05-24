@@ -1,37 +1,54 @@
 import React from 'react';
 import {AppUI} from './AppUI';
-/*
-const defaultTodos = [
-  {text:'Cortar cebolla', completed:false},
-  {text:'Tormar el curso de intro a react', completed:true},
-  {text:'Llorar con la llorona', completed:false}
-];
-*/
-function App() {
+
+// custom hook de localStorage
+const useLocalStorage = (itemName, initialValue) => {
   // obtiene localStorage de 'TODOS_V1'
-  const localStorageTodos = localStorage.getItem('TODOS_V1');
+  const localStorageItem = localStorage.getItem(itemName);
 
   // variable que contendra objeto de TODOs
-  let parsedTodos;
+  let parsedItem;
 
   // valida si NO fue creado el localStorage 'TODOS_V1'
-  if(!localStorageTodos){
+  if(!localStorageItem){
     // se crea el 'TODOS_V1' vacio
-    localStorage.setItem('TODOS_V1', JSON.stringify([]));
+    localStorage.setItem(itemName, JSON.stringify(initialValue));
 
     // se asigna objeto vacio
-    parsedTodos = [];
+    parsedItem = [];
   } else {
     // si ya fue creado se parsea para enviarlo al React.useState()
-    parsedTodos = JSON.parse(localStorageTodos);
+    parsedItem = JSON.parse(localStorageItem);
   }
+
+  // declaramos estado [todos] que por defecto contrendra el array previamente creada
+  const [item, setItem] = React.useState(parsedItem);
+
+  const updateLocalStorage = (newItem) => {
+    // se convierte a texto el array modificado
+    const stringifiedItem = JSON.stringify(newItem);
+
+    // se actualiza el localStorage con el array anterior
+    localStorage.setItem(itemName, stringifiedItem);
+
+    // mostramos el array modificado
+    setItem(newItem);
+  };
+
+  return [
+    item,
+    updateLocalStorage
+  ]
+
+};
+
+function App() {
+  // llamo a custom hook creado previamente
+  const [todos, updateLocalStorage] = useLocalStorage('TODOS_V1', []);
 
   // declaramos el estado para ver lo escrito en el input desde aqui,
   // para luego enviar como parametro a la etiqueta [TodoSearch]
   const [searchValue, setSearchValue] = React.useState('');
-
-  // declaramos estado [todos] que por defecto contrendra el array previamente creada
-  const [todos, setTodos] = React.useState(parsedTodos);
 
   // obtiene el numero de items del [todo] que fueron completados(true)
   const completedTodos = todos.filter(item => item.completed === true).length;
@@ -53,16 +70,7 @@ function App() {
     })
   };
 
-  const updateLocalStorage = (newTodos) => {
-    // se convierte a texto el array modificado
-    const stringifiedTodos = JSON.stringify(newTodos);
 
-    // se actualiza el localStorage con el array anterior
-    localStorage.setItem('TODOS_V1', stringifiedTodos);
-
-    // mostramos el array modificado
-    setTodos(newTodos);
-  };
 
   const completeTodo = (text) => {
     // obtiene el indice del item del array [todos] que se haga click
