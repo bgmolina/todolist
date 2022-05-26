@@ -94,6 +94,14 @@ function App() {
     updateLocalStorage(newTodo);
   };
 
+
+  console.log('%cRender - BEFORE useEffect', 'color:white; background-color:gray;') // [X]
+  // se ejecuta cada vez que haya cambios en "totalTodos"
+  React.useEffect(() => {
+    console.log('%cuseEffect code', 'color:white; background-color:green; font-weight: bold; font-size: 14px;') // [X]
+  }, [totalTodos]);
+  console.log('%cRender - AFTER useEffect', 'color:white; background-color:gray;') // [X]
+
   return (
     <AppUI
       totalTodos={totalTodos}
