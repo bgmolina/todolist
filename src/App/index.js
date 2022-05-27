@@ -3,48 +3,85 @@ import {AppUI} from './AppUI';
 
 // custom hook de localStorage
 const useLocalStorage = (itemName, initialValue) => {
-  // obtiene localStorage de 'TODOS_V1'
-  const localStorageItem = localStorage.getItem(itemName);
 
-  // variable que contendra objeto de TODOs
-  let parsedItem;
+  // inicia en false y solo indicara un error cuando suceda
+  const [error, setError] = React.useState(false);
 
-  // valida si NO fue creado el localStorage 'TODOS_V1'
-  if(!localStorageItem){
-    // se crea el 'TODOS_V1' vacio
-    localStorage.setItem(itemName, JSON.stringify(initialValue));
+  // la aplicacion inicia cargando
+  const [loading, setLoading] = React.useState(true);
 
-    // se asigna objeto vacio
-    parsedItem = [];
-  } else {
-    // si ya fue creado se parsea para enviarlo al React.useState()
-    parsedItem = JSON.parse(localStorageItem);
-  }
+  // Tomara como el dato que le ingresemos inicialmente al llamar al custom hook "useLocalStorage"
+  const [item, setItem] = React.useState(initialValue);
 
-  // declaramos estado [todos] que por defecto contrendra el array previamente creada
-  const [item, setItem] = React.useState(parsedItem);
+  React.useEffect(()=> {
+    setTimeout(()=> { // muestra despues de 2 segundos
+
+      try {
+        // obtiene localStorage de 'TODOS_V1'
+        const localStorageItem = localStorage.getItem(itemName);
+
+        // variable que contendra objeto de TODOs
+        let parsedItem;
+
+        // valida si NO fue creado el localStorage 'TODOS_V1'
+        if(!localStorageItem){
+          // se crea el 'TODOS_V1' vacio
+          localStorage.setItem(itemName, JSON.stringify(initialValue));
+
+          // se asigna objeto vacio
+          parsedItem = [];
+        } else {
+          // si ya fue creado se parsea para enviarlo al React.useState()
+          parsedItem = JSON.parse(localStorageItem);
+
+          // se actualiza los datos del localStorage
+          setItem(parsedItem);
+
+          // deja de carga cuando ya tiene los datos a mostrar
+          setLoading(false);
+        }
+      } catch (error) {
+        // si encuentra un error, actualiza el metodo
+        setError(error);
+      }
+
+    }, 2000)
+  });
+
 
   const updateLocalStorage = (newItem) => {
-    // se convierte a texto el array modificado
-    const stringifiedItem = JSON.stringify(newItem);
+    try {
+      // se convierte a texto el array modificado
+      const stringifiedItem = JSON.stringify(newItem);
 
-    // se actualiza el localStorage con el array anterior
-    localStorage.setItem(itemName, stringifiedItem);
+      // se actualiza el localStorage con el array anterior
+      localStorage.setItem(itemName, stringifiedItem);
 
-    // mostramos el array modificado
-    setItem(newItem);
+      // mostramos el array modificado
+      setItem(newItem);
+    } catch (error) {
+      // si encuentra un error, actualiza el metodo
+      setError(error);
+    }
   };
 
-  return [
+  return {
     item,
-    updateLocalStorage
-  ]
+    updateLocalStorage,
+    loading,
+    error,
+  }
 
 };
 
 function App() {
   // llamo a custom hook creado previamente
-  const [todos, updateLocalStorage] = useLocalStorage('TODOS_V1', []);
+  const {
+    item: todos, // renombramos
+    updateLocalStorage,
+    loading,
+    error,
+  } = useLocalStorage('TODOS_V1', []);
 
   // declaramos el estado para ver lo escrito en el input desde aqui,
   // para luego enviar como parametro a la etiqueta [TodoSearch]
@@ -71,7 +108,6 @@ function App() {
   };
 
 
-
   const completeTodo = (text) => {
     // obtiene el indice del item del array [todos] que se haga click
     const todoIndex = todos.findIndex(item => item.text === text);
@@ -94,16 +130,10 @@ function App() {
     updateLocalStorage(newTodo);
   };
 
-
-  console.log('%cRender - BEFORE useEffect', 'color:white; background-color:gray;') // [X]
-  // se ejecuta cada vez que haya cambios en "totalTodos"
-  React.useEffect(() => {
-    console.log('%cuseEffect code', 'color:white; background-color:green; font-weight: bold; font-size: 14px;') // [X]
-  }, [totalTodos]);
-  console.log('%cRender - AFTER useEffect', 'color:white; background-color:gray;') // [X]
-
   return (
     <AppUI
+      loading={loading}
+      error={error}
       totalTodos={totalTodos}
       completedTodos={completedTodos}
       searchValue = {searchValue}
