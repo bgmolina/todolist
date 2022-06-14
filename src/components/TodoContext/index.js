@@ -18,6 +18,9 @@ const TodoProvider = (props) => {
     // para luego enviar como parametro a la etiqueta [TodoSearch]
     const [searchValue, setSearchValue] = React.useState('');
 
+    // estado con inicializacion en false para Modal
+    const [openModal, setOpenModal] = React.useState(false);
+
     // obtiene el numero de items del [todo] que fueron completados(true)
     const completedTodos = todos.filter(item => item.completed === true).length;
 
@@ -71,6 +74,8 @@ const TodoProvider = (props) => {
             searchedTodos,
             completeTodo,
             deleteTodo,
+            openModal,
+            setOpenModal,
         }}>
             {props.children}
         </TodoContext.Provider>

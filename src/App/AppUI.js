@@ -5,6 +5,7 @@ import {TodoList} from '../components/TodoList';
 import {TodoItem} from '../components/TodoItem';
 import {CreateTodoButton} from '../components/CreateTodoButton';
 import {TodoContext} from '../components/TodoContext';
+import {Modal} from '../components/Modal';
 
 function AppUI() {
     const {
@@ -12,7 +13,9 @@ function AppUI() {
         loading,
         searchedTodos,
         completeTodo,
-        deleteTodo
+        deleteTodo,
+        openModal,
+        setOpenModal,
     } = React.useContext(TodoContext);
 
     return (
@@ -34,7 +37,21 @@ function AppUI() {
                 />
             ))}
         </TodoList>
-        <CreateTodoButton />
+
+        {/* si el estado de openModal es true, se ejecuta codigo */}
+        {openModal && (
+            <Modal>
+            {/* con el simbolo "?" pregunta si 1ro existe el array,
+                para luego traer el dato
+            */}
+                <p>{searchedTodos[0]?.text}</p>
+            </Modal>
+        )}
+
+        <CreateTodoButton
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+        />
         </>
     );
 }

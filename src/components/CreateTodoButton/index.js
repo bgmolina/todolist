@@ -1,14 +1,15 @@
 import './CreateTodoButton.css';
 
-const CreateTodoButton = () => {
-    const onClickButton = (msg) => {
-        console.log(msg);
+const CreateTodoButton = (props) => {
+    //por cada click en el boton se cambia el estado de "openModal"
+    const onClickButton = () => {
+        props.setOpenModal(true);
     };
 
     return(
         <button
         className="CreateTodoButton"
-        onClick={() => onClickButton("ventana del modal")}
+        onClick={onClickButton}
         >+</button>
     );
 };
