@@ -41,6 +41,19 @@ const TodoProvider = (props) => {
     })
     };
 
+    const addTodo = (text) => {
+        // hacemos copia del array [todos]
+        const newTodo = [...todos];
+        //agregamos nuevo item con la variable "text" recibida
+        newTodo.push({
+            text,
+            completed:false,
+        });
+    
+        // llama funcion para persistir las modificaciones en localStorage
+        updateLocalStorage(newTodo);
+    };
+
     const completeTodo = (text) => {
     // obtiene el indice del item del array [todos] que se haga click
     const todoIndex = todos.findIndex(item => item.text === text);
@@ -72,6 +85,7 @@ const TodoProvider = (props) => {
             searchValue,
             setSearchValue,
             searchedTodos,
+            addTodo,
             completeTodo,
             deleteTodo,
             openModal,
