@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todolist
+  namespace: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todolist
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0 # every pod must be available during the update
+  template:
+    metadata:
+      labels:
+        app: todolist
+    spec:
+      containers:
+      - image: bgmolina/todolist:latest
+        name: todolist
+        resources:
+          requests:
+            memory: "8Mi"
+            cpu: "50m" # 5% of core
+          limits:
+            memory: "16Mi"
+            cpu: "100m" # 10% of core
+        ports:
+          - containerPort: 80
