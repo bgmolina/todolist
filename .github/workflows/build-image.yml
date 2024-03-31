@@ -41,7 +41,7 @@ jobs:
           tags: ${{github.repository}}:${{env.TAG}}
 
   restart-service-testing:
-    if: ${{ env.TAG == 'testing' }}
+    if: ${{ github.env.TAG == 'testing'}}
     name: restart-service-testing
     runs-on: ubuntu-latest
     needs: build-image
@@ -57,7 +57,7 @@ jobs:
             microk8s kubectl rollout restart deployment todolist -n web-testing;
 
   restart-service-production:
-    if: ${{ env.TAG == 'latest' }}
+    if: ${{ github.env.TAG == 'latest'}}
     name: restart-service-production
     runs-on: ubuntu-latest
     needs: build-image
