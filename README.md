@@ -41,7 +41,7 @@ $ npm run build
 ```
 
 ## Link sitio web 🌐
-👉 [`URL`](https://bmolina1993.github.io/todoReact/)
+👉 [`URL`](https://testing-todolist.bgma.tech)
 
 ## Demo 🎬
 <img width="150" src="./demo/demo.mobile.gif"/>
