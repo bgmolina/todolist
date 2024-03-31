@@ -1,0 +1,12 @@
+services:
+  todolist-prod:
+    build: ../
+    image: todolist:1.0.0
+    container_name: todolist-prod
+    ports:
+      - 4002:80
+    restart: unless-stopped
+    mem_reservation: 8m
+    mem_limit: 16m
+    cpus: 0.10 # 10% of CPU
+    cpuset: "0" # Use only the first CPU
