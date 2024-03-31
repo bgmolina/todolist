@@ -54,7 +54,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            # microk8s kubectl rollout restart deployment todolist -n web-testing;
+            microk8s kubectl rollout restart deployment todolist -n web-testing;
 
   restart-service-production:
     if: ${{ github.ref_name == 'main'}}
@@ -70,4 +70,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            # microk8s kubectl rollout restart deployment todolist -n web;
+            microk8s kubectl rollout restart deployment todolist -n web;
