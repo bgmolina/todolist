@@ -41,7 +41,7 @@ jobs:
           tags: ${{github.repository}}:${{env.TAG}}
 
   restart-service-testing:
-    if: ${{ github.env.TAG == 'testing'}}
+    if: ${{ github.ref_name == 'testing'}}
     name: restart-service-testing
     runs-on: ubuntu-latest
     needs: build-image
@@ -54,10 +54,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            microk8s kubectl rollout restart deployment todolist -n web-testing;
+            # microk8s kubectl rollout restart deployment todolist -n web-testing;
 
   restart-service-production:
-    if: ${{ github.env.TAG == 'latest'}}
+    if: ${{ github.ref_name == 'main'}}
     name: restart-service-production
     runs-on: ubuntu-latest
     needs: build-image
@@ -70,23 +70,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            microk8s kubectl rollout restart deployment todolist -n web;
-
-  # connect-to-server:
-  #   name: restart-service
-  #   runs-on: ubuntu-latest
-  #   needs: build-image
-  #   steps:
-  #     - name: Restart service
-  #       uses: appleboy/ssh-action@v1.0.3
-  #       with:
-  #         host: ${{ secrets.HOST }}
-  #         username: ${{ secrets.USER }}
-  #         key: ${{ secrets.SSH_PRIVATE_KEY }}
-  #         port: ${{ secrets.PORT }}
-  #         script: |
-  #           if [ ${{ github.ref_name }} == 'main' ]; then
-  #             microk8s kubectl rollout restart deployment todolist -n web;
-  #           else
-  #             microk8s kubectl rollout restart deployment todolist -n web-testing;
-  #           fi
+            # microk8s kubectl rollout restart deployment todolist -n web;
