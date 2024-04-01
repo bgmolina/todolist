@@ -37,9 +37,9 @@ Select an option and press Enter 👆:
 ```bash
 $ kubectl get deployment -n web
 ```
-| NAME       | IMAGES                   |
-| ---------- | ------------------------ |
-| todolist   | bgmolina/todolist:latest |
+| NAME       | IMAGES                    |
+| ---------- | ------------------------- |
+| todolist   | bgmolina/todolist:testing |
 
 ### Service
 ```bash
