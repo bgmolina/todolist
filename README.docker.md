@@ -62,7 +62,7 @@ Select an option and press Enter 👆:
 <!-- <img width="500" src="./demo/docker.gif"/> -->
 
 ## Información relevante 📑
-### Imagen
+### Image
 ```bash
 $ docker images
 ```
@@ -71,7 +71,7 @@ $ docker images
 | node            | 18.14.2-alpine3.17 | ~174MB |
 | todolist        | 1.0.0              | ~41MB  |
 
-### Contenedor
+### Container
 ```bash
 $ docker ps
 ```
