@@ -14,7 +14,7 @@ services:
         npm i
         npm run dev
     restart: unless-stopped
-    mem_reservation: 128m
-    mem_limit: 256m
+    mem_reservation: 256m
+    mem_limit: 512m
     cpus: 0.50 # 50% of CPU
     cpuset: "0" # Use only the first CPU
