@@ -6,7 +6,7 @@
   />
 </a>
 
-# Todo list 🗒️
+# To do list 🗒️
 <div>
   <a href="https://pages.github.com/" target="_blank">
     <img
@@ -22,23 +22,19 @@
   </a>
 </div>
 
-## 👇 Run with Docker
+## Containers / Orchestration
 <a href="README.docker.en.md">
   <img
     src="https://img.shields.io/badge/Docker-086dd7?style=for-the-badge&logoColor=white&logo=docker"
     alt="Docker"
   />
 </a>
-
-## Run development mode
-```bash
-$ npm run start
-```
-
-## Build project
-```bash
-$ npm run build
-```
+<a href="README.k8s.en.md">
+  <img
+    src="https://img.shields.io/badge/kubernetes-326DE6?style=for-the-badge&logoColor=white&logo=kubernetes"
+    alt="Kubernetes"
+  />
+</a>
 
 ## Link website  🌐
 👉 [`URL`](https://testing-todolist.bgma.tech)
