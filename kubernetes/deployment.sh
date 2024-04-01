@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "======================="
-echo " To do list deployment "
-echo "======================="
+echo "==============="
+echo " To do list 🗒️ "
+echo "==============="
 
 PS3="Select an option and press Enter 👆: "
 OPTIONS=("Deploy service 🚀" "Delete service 🗑️" "Port forward website 🌐" "Quit 👋")

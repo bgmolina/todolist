@@ -30,7 +30,7 @@ $ bash deployment.sh
 Select an option and press Enter 👆: 
 ```
 ### Demo 🎬
-<!-- <img width="500" src="./demo/kubernetes.gif"/> -->
+<img width="500" src="./demo/kubernetes.gif"/>
 
 ## Información relevante 📑
 ### Deployment
